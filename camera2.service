@@ -1,0 +1,13 @@
+[Unit]
+Description=Runs the Live Camera Feed for /dev/video2
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Camera
+ExecStart=/home/pi/Camera/runCamera.sh 192.168.0.2 9992 /dev/video2 2> /dev/null
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
