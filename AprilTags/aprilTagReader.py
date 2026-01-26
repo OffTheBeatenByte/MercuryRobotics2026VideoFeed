@@ -30,7 +30,7 @@ def main():
             for d in detections: # print out a tab-separated list of detected tags
                 print(f"{d["id"]},{int(d["lb-rb-rt-lt"][0][0])},{int(d["lb-rb-rt-lt"][0][1])},{int(d["lb-rb-rt-lt"][1][0])}," \
                         f"{int(d["lb-rb-rt-lt"][1][1])},{int(d["lb-rb-rt-lt"][2][0])},{int(d["lb-rb-rt-lt"][2][1])},{int(d["lb-rb-rt-lt"][3][0])},{int(d["lb-rb-rt-lt"][3][1])}", end="\t")
-        print(flush=True)
+            print(flush=True)
 
 if   __name__ == "__main__":
     main()

@@ -18,6 +18,10 @@ For example:
 
 nc -l 9990 | ffplay -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 -
 
+OR
+
+./Viewer/receiveCamera.sh
+
 2. Start the server-side script
 
 ./reader.sh /dev/video2 9990 192.168.0.103 tags
