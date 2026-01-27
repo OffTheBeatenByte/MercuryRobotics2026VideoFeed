@@ -55,9 +55,12 @@ tags=${4:-tags}
 # > /dev/null            | Send the end of the "tee" chain to /dev/null.  Future things that need the video stream can be tacked on here is similar fashion to lines 2 and 3.
 
 #awk -vfile=$tags '{print $0 > file; close(file)}' # use this to rewrite a file with the most recent item
+./objectDetector.py & # we need to start this first, as it takes a while to start up
+sleep 4
 
 ffmpeg -re -s 640x480 -i $input -fflags +nobuffer -flags +low_delay -c:v rawvideo -f matroska - | \
-tee >(sudo ./aprilTagReader.py > $tags &) | \
+tee >(./aprilTagReader.py > $tags &) | \
 tee >(ffmpeg -re -i /dev/stdin -fflags +nobuffer -flags +low_delay -b:v 0 -c:v libx264 -preset superfast \
-  -tune zerolatency -rc-lookahead 0 -intra-refresh 1 -slice-max-size 1500 -g 1 -keyint_min 1 -crf 30 -crf_max 35 -f matroska - 2> encoded_log | nc $ip $port) \
-> /dev/null
+  -tune zerolatency -rc-lookahead 0 -intra-refresh 1 -slice-max-size 1500 -g 1 -keyint_min 1 -crf 30 -crf_max 35 -f matroska - 2> encoded_log | nc $ip $port &) | \
+stdbuf -i 500M cat > yolo_fifo #./objectDetector.py
+#tee /dev/null > /dev/null

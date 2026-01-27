@@ -10,8 +10,8 @@ def main():
     while True:
         cap = cv2.VideoCapture("/dev/stdin")
         if not cap.isOpened():
-            print("Error: could not open camera")
-            time.sleep(0.5)
+            print(f"{time.time()} Error: could not open camera", flush=True)
+            time.sleep(0.1)
         else:
             break
     
