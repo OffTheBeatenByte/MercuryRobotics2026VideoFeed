@@ -5,11 +5,11 @@ This gist holds the Camera Server and AprilTag reader for the Oklahoma State Uni
 
 It is called like this:
 
-./reader.sh <videostream input> <port> <ip address> <output file>
+<code>./reader.sh videostream_input port ip_address tag_file objDetection_file</code>
 
 For example:
 
-./reader.sh /dev/video2 9990 192.168.0.2 tags
+<code>./reader.sh /dev/video2 9990 192.168.0.2 tags detected</code>
 
 **To Operate:**
 ===============
@@ -24,18 +24,27 @@ OR
 
 2. Start the server-side script
 
-./reader.sh /dev/video2 9990 192.168.0.103 tags
+<code>./reader.sh /dev/video2 9990 192.168.0.103 tags # make sure to replace /dev/video2 with the intended camera and the ip address with the correct one</code>
 
 3. Read out the tag data
 
-watch -n 0.1 cat tags
+watch -n 0.1 tail -n 30 tags
 
 4. Move AprilTags in and out of frame, and watch as they appear in the "watch cat tags" window
 
-**Protocol for Output File**
+5. Read out object detection data
+
+watch -n 0.1 tail -n 30 detected
+
+**Protocol for Tags Output File**
 
 One line, with separate tags separated by tabs "\t".  Each tag is comma-separated integers: tagID,LeftBottomCornerX,
 LeftBottomCornerY,RightBottomCornerX,RightBottomCornerY,RightTopCornerX,RightTopCornerY,LeftTopCornerX,LeftTopCornerY
+
+**Protocol for Detections Output File**
+
+One line per time cycle, seperate objects separated by tabs "\t".  Each detection is comma-separated integers: objClass,
+Confidence (out of 100), BoxXpos, BoxYpox, BoxWidth, BoxHeight
 
 **Stats:**
 ==========
@@ -49,6 +58,7 @@ LeftBottomCornerY,RightBottomCornerX,RightBottomCornerY,RightTopCornerX,RightTop
 - As stable as the network carrying it is
 - Can recover from multi-second lag spikes / network drops (during which no video is transmitted) with no issues
 - No hard limits on number of tags readable simultaneously (other than how many can be reliably read from the video stream)
+- Object detection is fairly heavy on CPU
 
 
 **Limitations:**
@@ -68,3 +78,5 @@ sudo apt install python3-apriltag
 sudo apt install ffmpeg
 
 sudo apt install ncat
+
+pip3 install -U ultralytics

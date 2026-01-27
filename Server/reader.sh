@@ -61,9 +61,8 @@ detection_file=${5:-detected}
 
 # Line 7:
 # stdbuf -i 500M         | Use the output of the previous tee and insert a 500MB buffer.  This is because objectDetector takes images in batches, so we need to buffer them in-between pulls.
-# > yolo_fifo            | And send it to the named pipe
+# cat > yolo_fifo            | And send it to the named pipe
 
-#awk -vfile=$tags '{print $0 > file; close(file)}' # use this to rewrite a file with the most recent item
 ./objectDetector.py $detection_file & # we need to start this first, as it takes a while to start up
 sleep 2
 

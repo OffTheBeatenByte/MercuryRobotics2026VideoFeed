@@ -35,7 +35,7 @@ with open(sys.argv[1], "w") as f: # output file, supplied from args
             results = model.predict(frame)
             for result in results:
                 for box in result.boxes:
-                    print(f"{int(box.cls)},{int(box.conf*100)},{int(box.xywh[0][0])},{int(box.xywh[0][1])},{int(box.xywh[0][2])},{int(box.xywh[0][3])}", end=" ", file=f)
+                    print(f"{int(box.cls)},{int(box.conf*100)},{int(box.xywh[0][0])},{int(box.xywh[0][1])},{int(box.xywh[0][2])},{int(box.xywh[0][3])}", end="\t", file=f)
             print(file=f, flush=True)
         else:
             # Break the loop if the video stream breaks
