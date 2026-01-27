@@ -3,11 +3,19 @@ input=${1:-/dev/video2} # take argv[1] if it exists, otherwise /dev/video2
 port=${2:-9990}
 ip=${3:-192.168.0.103}
 tags=${4:-tags}
+detection_file=${5:-detected}
 
 # Explanation of all commands
 # NOTE: all lines are technically one line.  "\" is the line continuation character in bash
 
 # Line 1:
+#   ./objectDetector.py    | Run the object detection program
+#   $detection_file &      | Use the supplied file to write data to
+
+# Line 2:
+#   sleep 2           | Give objectDetector time to load the model
+
+# Line 3:
 #   ffmpeg            | Use ffmpeg to read the video from the raw camera device
 #   -re               | Read at the same framerate as the source
 #   -s 640x480        | Output at 640x480 pixels
@@ -18,14 +26,14 @@ tags=${4:-tags}
 #   -f matroska       | Use the 'matroska' output format.  This is the lowest latency format that I could find.
 #   - | \             | Output the video to stdout and pipe it to the next command
 
-# Line 2:
+# Line 4:
 #   tee                       | Take a input stream and dump it to stdout as well as any files specified.  THIS COMMAND BLOCKS ON FILE WRITE ERRORS!
 #   >(                        | A shell file-to-command redirect.  This redirects what would usually be going to a file and sends it to the stdin of the following command.  Closed with ")"
 #   sudo ./aprilTagReader.py  | Run the AprilTag reading program.  Sends the position of tags to stdout.  The detector creates a subprocess, which requires root privileges, which "sudo" provides. TODO: Find a better way to do this without "sudo"
 #   > $tags                   | Redirect the tag data to file $tags
 #   &) | \                    | Run the preceding command in a background process (nonblocking), close the file-to-command redirect, and pipe the output of "tee" to the next line.
 
-# Lines 3 & 4:
+# Lines 5 & 6:
 #   tee >(ffmpeg         | Use ffmpeg to read from
 #   -re                  | Use the same framerate as the input footage
 #   -s 640x480           | Sets the input frame size
@@ -51,16 +59,16 @@ tags=${4:-tags}
 #   $ip                  | Destination IP.  In this case, the viewer's computer.
 #   $port) \             | Destination Port.  MAKE SURE TO CHANGE THIS FOR EACH CAMERA!!!  Also closes the file-to-command redirect
 
-# Line 5:
-# > /dev/null            | Send the end of the "tee" chain to /dev/null.  Future things that need the video stream can be tacked on here is similar fashion to lines 2 and 3.
+# Line 7:
+# stdbuf -i 500M         | Use the output of the previous tee and insert a 500MB buffer.  This is because objectDetector takes images in batches, so we need to buffer them in-between pulls.
+# > yolo_fifo            | And send it to the named pipe
 
 #awk -vfile=$tags '{print $0 > file; close(file)}' # use this to rewrite a file with the most recent item
-./objectDetector.py & # we need to start this first, as it takes a while to start up
-sleep 4
+./objectDetector.py $detection_file & # we need to start this first, as it takes a while to start up
+sleep 2
 
 ffmpeg -re -s 640x480 -i $input -fflags +nobuffer -flags +low_delay -c:v rawvideo -f matroska - | \
 tee >(./aprilTagReader.py > $tags &) | \
 tee >(ffmpeg -re -i /dev/stdin -fflags +nobuffer -flags +low_delay -b:v 0 -c:v libx264 -preset superfast \
   -tune zerolatency -rc-lookahead 0 -intra-refresh 1 -slice-max-size 1500 -g 1 -keyint_min 1 -crf 30 -crf_max 35 -f matroska - 2> encoded_log | nc $ip $port &) | \
-stdbuf -i 500M cat > yolo_fifo #./objectDetector.py
-#tee /dev/null > /dev/null
+stdbuf -i 500M cat > yolo_fifo 

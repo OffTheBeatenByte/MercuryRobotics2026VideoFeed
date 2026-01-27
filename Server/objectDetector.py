@@ -4,9 +4,11 @@ import cv2
 import sys
 import time
 from ultralytics import YOLO
-INPUT = "yolo_fifo"
 
-print("start", flush=True)
+INPUT = "yolo_fifo" # we pull from a named pipe
+
+print("start", flush=True) # status
+
 model = YOLO("yolo26n_ncnn_model", task="detect")
 
 cap = cv2.VideoCapture(INPUT)
@@ -14,11 +16,11 @@ i = 0
 while not cap.isOpened():
     cap = cv2.VideoCapture(INPUT)
     i += 1
-    print(f"loading capture failed... Retrying {i}", flush=True)
+    print(f"loading capture failed... Retrying {i}", flush=True) # keep printing with increasing numbers so we can see that it is still alive
     time.sleep(0.02)
 
 print("rolling", flush=True)
-with open("detected", "w") as f:
+with open(sys.argv[1], "w") as f: # output file, supplied from args
     while cap.isOpened():
         # Read six frames from the video
         # This is to attempt to decrease CPU load
@@ -35,9 +37,8 @@ with open("detected", "w") as f:
                 for box in result.boxes:
                     print(f"{int(box.cls)},{int(box.conf*100)},{int(box.xywh[0][0])},{int(box.xywh[0][1])},{int(box.xywh[0][2])},{int(box.xywh[0][3])}", end=" ", file=f)
             print(file=f, flush=True)
-            #print("\t".join(result.boxes.xywh[][] for result in results), file=f, flush=True)
         else:
-            # Break the loop if the end of the video is reached
+            # Break the loop if the video stream breaks
             break
 
 cap.release()
