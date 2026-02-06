@@ -1,0 +1,14 @@
+[Unit]
+Description=Runs the Live Camera Feed for /dev/video0
+After=camerasBoot.service
+Requires=camerasBoot.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Camera
+ExecStart=ffmpeg -r 40 -s 640x480 -i /dev/video1 -fflags +nobuffer -flags +low_delay -f v4l2 /dev/video110 -f v4l2 /dev/video111 -f v4l2 /dev/video112
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

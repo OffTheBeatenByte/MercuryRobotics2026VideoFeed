@@ -1,0 +1,14 @@
+[Unit]
+Description=Runs the Live Camera Feed for /dev/video0
+After=camera0cat.service
+Requires=camera0cat.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Camera
+ExecStart=ffmpeg -re -i /dev/video100 -fflags +nobuffer -flags +low_delay -b:v 0 -c:v libx264 -preset superfast -tune zerolatency -rc-lookahead 0 -intra-refresh 1 -slice-max-size 1500 -g 1 -keyint_min 1 -crf 30 -crf_max 35 -f matroska - | nc $(cat /home/mercury/IP) 9990
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

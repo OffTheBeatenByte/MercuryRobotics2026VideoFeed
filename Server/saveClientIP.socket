@@ -1,0 +1,7 @@
+[Socket]
+ListenStream=9999
+BindIPv6Only=both
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

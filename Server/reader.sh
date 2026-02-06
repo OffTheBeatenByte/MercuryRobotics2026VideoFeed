@@ -63,11 +63,18 @@ detection_file=${5:-detected}
 # stdbuf -i 500M         | Use the output of the previous tee and insert a 500MB buffer.  This is because objectDetector takes images in batches, so we need to buffer them in-between pulls.
 # cat > yolo_fifo            | And send it to the named pipe
 
-./objectDetector.py $detection_file & # we need to start this first, as it takes a while to start up
-sleep 2
+#./objectDetector.py $detection_file & # we need to start this first, as it takes a while to start up
+#sleep 4
 
 ffmpeg -re -s 640x480 -i $input -fflags +nobuffer -flags +low_delay -c:v rawvideo -f matroska - | \
-tee >(./aprilTagReader.py > $tags &) | \
+#tee >(./aprilTagReader.py > $tags &) | \
 tee >(ffmpeg -re -i /dev/stdin -fflags +nobuffer -flags +low_delay -b:v 0 -c:v libx264 -preset superfast \
   -tune zerolatency -rc-lookahead 0 -intra-refresh 1 -slice-max-size 1500 -g 1 -keyint_min 1 -crf 30 -crf_max 35 -f matroska - 2> encoded_log | nc $ip $port &) | \
-stdbuf -i 500M cat > yolo_fifo 
+#stdbuf -i 500M cat > yolo_fifo 
+tee /dev/null > /dev/null
+
+
+
+# stream from the camera to the v4l2loopback spots
+sudo modprobe v4l2loopback video_nr=10,11,12 card_label="video0_copy"
+ffmpeg -r 40 -s 640x480 -i /dev/video0 -fflags +nobuffer -flags +low_delay -f v4l2 /dev/video10 -f v4l2 /dev/video11 -f v4l2 /dev/video12

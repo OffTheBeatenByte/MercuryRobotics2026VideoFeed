@@ -1,0 +1,10 @@
+[Unit]
+Description=Save the Client's IP address so other services can reach it
+
+[Service]
+ExecStart=cat > /home/mercury/IP
+StandardInput=socket
+Restart=on-failure
+
+[Install]
+WantedBy=sockets.target

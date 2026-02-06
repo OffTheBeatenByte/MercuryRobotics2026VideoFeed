@@ -11,18 +11,15 @@ ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers
   libswscale      7.  5.100 /  7.  5.100
   libswresample   4. 12.100 /  4. 12.100
   libpostproc    57.  3.100 / 57.  3.100
-Input #0, matroska,webm, from '/dev/stdin':
-  Metadata:
-    ENCODER         : Lavf60.16.100
-  Duration: N/A, start: 0.000000, bitrate: N/A
-  Stream #0:0: Video: rawvideo (YUY2 / 0x32595559), yuyv422(progressive), 640x480, 30 fps, 30 tbr, 1k tbn
-    Metadata:
-      ENCODER         : Lavc60.31.102 rawvideo
+Input #0, video4linux2,v4l2, from '/dev/video0':
+  Duration: N/A, start: 44130.507996, bitrate: 147456 kb/s
+  Stream #0:0: Video: rawvideo (YUY2 / 0x32595559), yuyv422, 640x480, 147456 kb/s, 30 fps, 30 tbr, 1000k tbn
 Stream mapping:
   Stream #0:0 -> #0:0 (rawvideo (native) -> h264 (libx264))
-[libx264 @ 0x5e2c57ba85c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
-[libx264 @ 0x5e2c57ba85c0] profile High 4:2:2 Intra, level 3.0, 4:2:2, 8-bit
-[libx264 @ 0x5e2c57ba85c0] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x3:0x3 me=dia subme=1 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=7 lookahead_threads=7 sliced_threads=1 slices=7 slice_max_size=1500 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=0 keyint=1 keyint_min=1 scenecut=40 intra_refresh=0 rc=crf mbtree=0 crf=30.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Press [q] to stop, [?] for help
+[libx264 @ 0x591f5cc6f400] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+[libx264 @ 0x591f5cc6f400] profile High 4:2:2 Intra, level 3.0, 4:2:2, 8-bit
+[libx264 @ 0x591f5cc6f400] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x3:0x3 me=dia subme=1 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=7 lookahead_threads=7 sliced_threads=1 slices=7 slice_max_size=1500 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=0 keyint=1 keyint_min=1 scenecut=40 intra_refresh=0 rc=crf mbtree=0 crf=30.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
 Output #0, matroska, to 'pipe:':
   Metadata:
     encoder         : Lavf60.16.100
@@ -31,15 +28,20 @@ Output #0, matroska, to 'pipe:':
       encoder         : Lavc60.31.102 libx264
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
-frame=    0 fps=0.0 q=27.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=N/A    frame=   13 fps=0.0 q=36.0 size=     108kB time=00:00:00.53 bitrate=1662.0kbits/s speed=0.972x    frame=   28 fps= 26 q=36.0 size=     238kB time=00:00:01.13 bitrate=1723.8kbits/s speed=1.05x    frame=   41 fps= 26 q=36.0 size=     352kB time=00:00:01.63 bitrate=1764.3kbits/s speed=1.02x    frame=   54 fps= 25 q=36.0 size=     457kB time=00:00:02.16 bitrate=1727.1kbits/s speed=1.02x    frame=   67 fps= 25 q=36.0 size=     559kB time=00:00:02.66 bitrate=1718.6kbits/s speed=0.999x    frame=   80 fps= 25 q=36.0 size=     668kB time=00:00:03.20 bitrate=1709.8kbits/s speed=1.01x    frame=   93 fps= 25 q=35.0 size=     744kB time=00:00:03.73 bitrate=1633.0kbits/s speed=1.01x    frame=  106 fps= 25 q=36.0 size=     820kB time=00:00:04.23 bitrate=1587.0kbits/s speed=1.01x    frame=  119 fps= 25 q=36.0 size=     896kB time=00:00:04.76 bitrate=1540.6kbits/s speed=1.01x    frame=  132 fps= 25 q=36.0 size=     985kB time=00:00:05.26 bitrate=1531.4kbits/s speed=1.01x    frame=  145 fps= 25 q=36.0 size=    1071kB time=00:00:05.80 bitrate=1512.9kbits/s speed=   1x    frame=  158 fps= 25 q=36.0 size=    1154kB time=00:00:06.33 bitrate=1492.3kbits/s speed=   1x    frame=  172 fps= 25 q=36.0 size=    1247kB time=00:00:06.86 bitrate=1487.1kbits/s speed=   1x    frame=  185 fps= 25 q=36.0 size=    1335kB time=00:00:07.40 bitrate=1477.9kbits/s speed=1.01x    frame=  198 fps= 25 q=36.0 size=    1426kB time=00:00:07.93 bitrate=1472.7kbits/s speed=1.01x    frame=  211 fps= 25 q=36.0 size=    1521kB time=00:00:08.43 bitrate=1477.3kbits/s speed=   1x    frame=  223 fps= 25 q=36.0 size=    1597kB time=00:00:08.96 bitrate=1458.9kbits/s speed=   1x    frame=  237 fps= 25 q=36.0 size=    1675kB time=00:00:09.53 bitrate=1439.1kbits/s speed=1.01x    frame=  249 fps= 25 q=35.0 size=    1731kB time=00:00:10.03 bitrate=1413.7kbits/s speed=   1x    frame=  260 fps= 25 q=36.0 size=    1786kB time=00:00:10.53 bitrate=1388.8kbits/s speed=   1x    frame=  274 fps= 25 q=36.0 size=    1858kB time=00:00:11.06 bitrate=1375.1kbits/s speed=   1x    frame=  287 fps= 25 q=35.0 size=    1921kB time=00:00:11.60 bitrate=1356.4kbits/s speed=   1x    frame=  300 fps= 25 q=36.0 size=    1977kB time=00:00:12.13 bitrate=1334.9kbits/s speed=   1x    frame=  313 fps= 25 q=36.0 size=    2041kB time=00:00:12.63 bitrate=1323.4kbits/s speed=   1x    frame=  327 fps= 25 q=35.0 size=    2102kB time=00:00:13.20 bitrate=1304.5kbits/s speed=   1x    frame=  340 fps= 25 q=36.0 size=    2167kB time=00:00:13.73 bitrate=1292.4kbits/s speed=   1x    frame=  353 fps= 25 q=36.0 size=    2241kB time=00:00:14.23 bitrate=1289.9kbits/s speed=   1x    frame=  366 fps= 25 q=36.0 size=    2318kB time=00:00:14.76 bitrate=1286.1kbits/s speed=   1x    frame=  379 fps= 25 q=36.0 size=    2398kB time=00:00:15.26 bitrate=1286.8kbits/s speed=   1x    frame=  393 fps= 25 q=36.0 size=    2480kB time=00:00:15.83 bitrate=1283.0kbits/s speed=   1x    frame=  406 fps= 25 q=35.0 size=    2549kB time=00:00:16.36 bitrate=1275.9kbits/s speed=   1x    frame=  419 fps= 25 q=35.0 size=    2629kB time=00:00:16.86 bitrate=1277.1kbits/s speed=   1x    frame=  432 fps= 25 q=35.0 size=    2706kB time=00:00:17.40 bitrate=1274.2kbits/s speed=   1x    frame=  445 fps= 25 q=36.0 size=    2798kB time=00:00:17.93 bitrate=1278.3kbits/s speed=   1x    frame=  458 fps= 25 q=36.0 size=    2904kB time=00:00:18.43 bitrate=1290.7kbits/s speed=   1x    frame=  471 fps= 25 q=36.0 size=    3015kB time=00:00:18.96 bitrate=1302.0kbits/s speed=   1x    frame=  484 fps= 25 q=36.0 size=    3127kB time=00:00:19.46 bitrate=1315.7kbits/s speed=   1x    [out#0/matroska @ 0x5e2c57ba6880] video:3198kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.457311%
-frame=  492 fps= 25 q=36.0 Lsize=    3213kB time=00:00:19.76 bitrate=1331.4kbits/s speed=0.999x    
-[libx264 @ 0x5e2c57ba85c0] frame I:492   Avg QP:35.19  size:  6655
-[libx264 @ 0x5e2c57ba85c0] mb I  I16..4: 25.3% 67.7%  7.1%
-[libx264 @ 0x5e2c57ba85c0] 8x8 transform intra:67.7%
-[libx264 @ 0x5e2c57ba85c0] coded y,uvDC,uvAC intra: 43.8% 23.8% 3.1%
-[libx264 @ 0x5e2c57ba85c0] i16 v,h,dc,p: 24% 24% 35% 16%
-[libx264 @ 0x5e2c57ba85c0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 13% 18% 27%  9%  6%  5%  8%  4% 10%
-[libx264 @ 0x5e2c57ba85c0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 22% 15% 33%  8%  4%  4%  5%  3%  6%
-[libx264 @ 0x5e2c57ba85c0] i8c dc,h,v,p: 77% 10% 11%  2%
-[libx264 @ 0x5e2c57ba85c0] kb/s:1597.15
+frame=    0 fps=0.0 q=27.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=N/A    frame=    2 fps=0.0 q=35.0 size=       1kB time=00:00:01.06 bitrate=   3.9kbits/s speed=   2x    frame=   17 fps= 16 q=35.0 size=      82kB time=00:00:01.56 bitrate= 426.2kbits/s speed=1.52x    frame=   32 fps= 20 q=35.0 size=     153kB time=00:00:02.10 bitrate= 596.3kbits/s speed=1.34x    frame=   46 fps= 22 q=35.0 size=     218kB time=00:00:02.60 bitrate= 685.4kbits/s speed=1.25x    frame=   60 fps= 23 q=35.0 size=     283kB time=00:00:03.13 bitrate= 739.7kbits/s speed=1.21x    frame=   74 fps= 24 q=35.0 size=     349kB time=00:00:03.63 bitrate= 787.7kbits/s speed=1.17x    frame=   88 fps= 24 q=35.0 size=     412kB time=00:00:04.13 bitrate= 816.6kbits/s speed=1.15x    frame=  103 fps= 25 q=35.0 size=     482kB time=00:00:04.63 bitrate= 851.8kbits/s speed=1.13x    frame=  119 fps= 26 q=35.0 size=     559kB time=00:00:05.16 bitrate= 886.3kbits/s speed=1.12x    frame=  134 fps= 26 q=35.0 size=     629kB time=00:00:05.66 bitrate= 909.8kbits/s speed= 1.1x    [video4linux2,v4l2 @ 0x591f5cc6bfc0] Dequeued v4l2 buffer contains corrupted data (614400 bytes).
+frame=  148 fps= 26 q=35.0 size=     694kB time=00:00:06.16 bitrate= 922.5kbits/s speed=1.09x    frame=  164 fps= 27 q=35.0 size=     769kB time=00:00:06.70 bitrate= 940.5kbits/s speed=1.09x    frame=  179 fps= 27 q=35.0 size=     839kB time=00:00:07.20 bitrate= 955.0kbits/s speed=1.08x    [vost#0:0/libx264 @ 0x591f5cc6f000] Error submitting a packet to the muxer: Broken pipe
+[out#0/matroska @ 0x591f5cc6d9c0] Error muxing a packet
+[out#0/matroska @ 0x591f5cc6d9c0] Error writing trailer: Broken pipe
+[out#0/matroska @ 0x591f5cc6d9c0] Error closing file: Broken pipe
+[out#0/matroska @ 0x591f5cc6d9c0] video:857kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+frame=  182 fps= 27 q=35.0 Lsize=     853kB time=00:00:07.26 bitrate= 961.9kbits/s speed=1.07x    
+[libx264 @ 0x591f5cc6f400] frame I:182   Avg QP:32.45  size:  4818
+[libx264 @ 0x591f5cc6f400] mb I  I16..4: 34.2% 60.4%  5.4%
+[libx264 @ 0x591f5cc6f400] 8x8 transform intra:60.4%
+[libx264 @ 0x591f5cc6f400] coded y,uvDC,uvAC intra: 27.8% 35.7% 3.1%
+[libx264 @ 0x591f5cc6f400] i16 v,h,dc,p: 28% 32% 13% 27%
+[libx264 @ 0x591f5cc6f400] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 13% 22% 25%  9%  4%  5%  7%  6% 10%
+[libx264 @ 0x591f5cc6f400] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 17% 19% 40%  7%  3%  3%  4%  3%  3%
+[libx264 @ 0x591f5cc6f400] i8c dc,h,v,p: 58% 17% 18%  7%
+[libx264 @ 0x591f5cc6f400] kb/s:1156.34
 Exiting normally, received signal 2.

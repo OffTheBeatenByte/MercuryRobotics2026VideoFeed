@@ -1,0 +1,14 @@
+[Unit]
+Description=Runs the Live Camera Feed for /dev/video0
+After=saveClientIP.service
+Requires=saveClientIP.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Camera
+ExecStart=sudo modprobe v4l2loopback video_nr=100,101,102,110,111,112,120,121,122 card_label="video0_copy"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
