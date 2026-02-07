@@ -1,7 +1,6 @@
 [Unit]
 Description=Runs the Live Camera Feed for /dev/video0
-After=saveClientIP.service
-Requires=saveClientIP.service
+After=network.target
 
 [Service]
 Type=simple
