@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/Camera
-ExecStart=sudo modprobe v4l2loopback video_nr=40,41,42,50,51,52,60,61,62 card_label="video0_copy"
-Restart=always
+WorkingDirectory=/home/pi/
+ExecStart=bash /home/pi/MercuryRobotics2026VideoFeed/Server/camerasBoot.sh
+Restart=on-fail
 
 [Install]
 WantedBy=multi-user.target
