@@ -26,8 +26,9 @@ def single_connection(sock, ip):
     
     # start systemd commands
     os.system("sudo systemctl start camera0send.service")
-    os.system("sudo systemctl start camera1send.service")
-    os.system("sudo systemctl start camera2send.service")
+    #os.system("sudo systemctl start camera1send.service")
+    #os.system("sudo systemctl start camera2send.service")
+    print("Start systemd")
     
     # receive heartbeat
     sock.settimeout(0.25) # we need a heartbeat at least every quarter second, so there is time to shut down the motors within 1 second if there is a loss of signal
@@ -40,8 +41,9 @@ def single_connection(sock, ip):
     
     # stop systemd
     os.system("sudo systemctl stop camera0send.service")
-    os.system("sudo systemctl stop camera1send.service")
-    os.system("sudo systemctl stop camera2send.service")
+    #os.system("sudo systemctl stop camera1send.service")
+    #os.system("sudo systemctl stop camera2send.service")
+    print("Stop systemd")
     
     return
 
