@@ -4,6 +4,7 @@ Viewer/camera2Log.txt
 Server/tags
 Server/encoded_log
 Server/detected
+Server/Live/aprilTags
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -17,6 +17,6 @@
 # - 2> camera0Log.txt                                           | Use stdin as the video input (piped from netcat), and send the output (which is sent over stderr) to a logfile for each camera
 
 # start the reciever of camera 0, 1, 2
-eval "while [ 1 ]; do nc -l 9990 | ffplay -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera0Log.txt; echo Restarting camera0; sleep 2; done" &
-eval "while [ 1 ]; do nc -l 9991 | ffplay -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera1Log.txt; echo Restarting camera1; sleep 2; done" &
-eval "while [ 1 ]; do nc -l 9992 | ffplay -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera2Log.txt; echo Restarting camera2; sleep 2; done"
+eval "while [ 1 ]; do nc -l 9990 | ffplay -autoexit -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera0Log.txt; echo Restarting camera0; sleep 2; done" &
+eval "while [ 1 ]; do nc -l 9991 | ffplay -autoexit -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera1Log.txt; echo Restarting camera1; sleep 2; done" &
+eval "while [ 1 ]; do nc -l 9992 | ffplay -autoexit -fflags +nobuffer -flags +low_delay -framedrop -infbuf -vf setpts=0 - 2> camera2Log.txt; echo Restarting camera2; sleep 2; done"

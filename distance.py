@@ -6,11 +6,23 @@ import sys
 from pupil_apriltags import Detector
 
 GRAPHICAL = True
+OUTPUT_PATH = "/home/pi/MercuryRobotics2026VideoFeed/Camera/Server/Live/aprilTags"
 
 pkl_path = Path("./output/calibration_data.pkl") #path for the data package
 
 with pkl_path.open("rb") as f:
     calibration_data = pickle.load(f)
+    
+# Define the 3D object points of the tag in its own coordinate system
+# The size is the length of the inner edge (e.g., 0.1 meters for a 10cm tag)
+tag_size = 0.0508 #placeholder and in meters
+tag_half_size = tag_size / 2.0
+object_points = np.array([
+        [-tag_half_size, tag_half_size, 0],
+        [tag_half_size, tag_half_size, 0],
+        [tag_half_size, -tag_half_size, 0],
+        [-tag_half_size, -tag_half_size, 0]
+    ], dtype=np.float32)
 
 detector = Detector(families='tag36h11')
 
@@ -37,32 +49,19 @@ while (cam.isOpened()):
         )
         image_points = tag.corners.astype(np.float64) 
 
-    # ... (Assume you have camera_matrix, dist_coeffs, and tag_size from calibration)
-
-    # In your main loop, after detecting a tag and its image_points (4 corners):
-
-    # Define the 3D object points of the tag in its own coordinate system
-    # The size is the length of the inner edge (e.g., 0.1 meters for a 10cm tag)
-
-    tag_size = 0.0508 #placeholder and in meters
-    tag_half_size = tag_size / 2.0
-    object_points = np.array([
-            [-tag_half_size, tag_half_size, 0],
-            [tag_half_size, tag_half_size, 0],
-            [tag_half_size, -tag_half_size, 0],
-            [-tag_half_size, -tag_half_size, 0]
-        ], dtype=np.float32)
-
-    success, rvec, tvec = cv2.solvePnP(object_points, image_points, camera_matrix, dist_coeffs)
     # Use solvePnP to get rotation and translation vectors
+    success, rvec, tvec = cv2.solvePnP(object_points, image_points, camera_matrix, dist_coeffs)
 
     if success:
-        # Calculate the distance (magnitude of the translation vector)
+        # Calculate the distance (magnitude of the translation vector) (can just use the Z distance to speed it up, at a loss of accuracy)
         distance = np.sqrt(tvec[0]**2 + tvec[1]**2 + tvec[2]**2) *100
-        # The distance can also often be approximated by just the tvec[2] (z-component)
-        # distance = tvec[2]
-        
-        print(f"{tag.tag_id},{tvec[0]},{tvec[1]},{tvec[2]},{distance}")
+
+        # write the output file
+        # we rewrite the output file every iteration so only the newest tag data is available
+        with open(OUTPUT_PATH, 'w') as f:
+            s = f"{tag.tag_id},{tvec[0]},{tvec[1]},{tvec[2]},{distance}"
+            f.write(s)
+            print(s)
 
     if GRAPHICAL:
         key = cv2.waitKey(1) & 0xFF
