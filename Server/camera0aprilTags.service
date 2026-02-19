@@ -1,0 +1,14 @@
+[Unit]
+Description=Runs the April Tag feed for /dev/video0
+After=camera0cat.service
+Requires=camera0cat.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Camera
+ExecStart=/home/pi/Camera/distance.py /dev/video101
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

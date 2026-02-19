@@ -17,6 +17,10 @@ import os
 import select
 
 IP_LOCATION = "./IP"
+UNITS = [
+    "camera0send.service",
+    "camera0aprilTags.service",
+]
 
 def single_connection(sock, ip):
     # save IP address
@@ -25,9 +29,8 @@ def single_connection(sock, ip):
         f.write(str(ip).strip())
     
     # start systemd commands
-    os.system("sudo systemctl start camera0send.service")
-    #os.system("sudo systemctl start camera1send.service")
-    #os.system("sudo systemctl start camera2send.service")
+    for unit in UNITS:
+        os.system("sudo systemctl start %s" % unit)
     print("Start systemd")
     
     # receive heartbeat
@@ -40,9 +43,8 @@ def single_connection(sock, ip):
             break
     
     # stop systemd
-    os.system("sudo systemctl stop camera0send.service")
-    #os.system("sudo systemctl stop camera1send.service")
-    #os.system("sudo systemctl stop camera2send.service")
+    for unit in UNITS:
+        os.system("sudo systemctl stop %s" % unit)
     print("Stop systemd")
     
     return

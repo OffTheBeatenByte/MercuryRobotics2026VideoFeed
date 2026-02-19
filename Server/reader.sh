@@ -1,4 +1,27 @@
 #! /bin/bash
+
+# THIS FILE IS JUST FOR REFERENCE!!!!!
+# DO NOT USE IN PRODUCTION!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 input=${1:-/dev/video2} # take argv[1] if it exists, otherwise /dev/video2
 port=${2:-9990}
 ip=${3:-192.168.0.103}
