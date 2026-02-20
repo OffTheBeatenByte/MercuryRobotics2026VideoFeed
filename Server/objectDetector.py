@@ -4,13 +4,15 @@ import cv2
 import sys
 import time
 from ultralytics import YOLO
+import torch.nn.utils.prune as prune
+
 
 INPUT = "yolo_fifo" # we pull from a named pipe
 
 print("start", flush=True) # status
 
 model = YOLO("yolo26n_ncnn_model", task="detect")
-
+prune.random_unstructured(model.model, name='weight', amount=0.3) #TODO TEST THIS
 cap = cv2.VideoCapture(INPUT)
 i = 0
 while not cap.isOpened():
