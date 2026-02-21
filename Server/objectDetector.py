@@ -34,7 +34,7 @@ with open(sys.argv[1], "w") as f: # output file, supplied from args
         success, frame = cap.read()
 
         if success:
-            results = model.predict(frame)
+            results = model.predict(frame,  classes=[65,41], conf=0.2)
             for result in results:
                 for box in result.boxes:
                     print(f"{int(box.cls)},{int(box.conf*100)},{int(box.xywh[0][0])},{int(box.xywh[0][1])},{int(box.xywh[0][2])},{int(box.xywh[0][3])}", end="\t", file=f)

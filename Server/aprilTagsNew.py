@@ -4,7 +4,7 @@ from pathlib import Path
 import pickle
 from pupil_apriltags import Detector
 
-pkl_path = Path("./output/calibration_data.pkl") #path for the data package
+pkl_path = Path("./callibration/output/calibration_data.pkl") #path for the data package
 
 with pkl_path.open("rb") as f:
     calibration_data = pickle.load(f)
@@ -58,6 +58,8 @@ while (cam.isOpened()):
             # distance = tvec[2]
         
             print(f"Distance to tag: {distance[0]} centimeters")
+
+            #Eventually pipe this to SolvePositions
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
